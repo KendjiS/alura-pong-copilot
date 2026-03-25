@@ -2,8 +2,8 @@
 let x = 200;
 let y = 200;
 
-// variaveis para controlar a velocidade da bola
-let speedX = 5;
+// deixe as velocidades aleatorias para a bola se mover
+let speedX = 2;
 let speedY = 5;
 
 // crie a funcao setup do p5js
@@ -14,8 +14,15 @@ function setup() {
 // funcao de desenho do p5js
 function draw() {
     background(0);
-    fill(255);
     ellipse(x, y, 50, 50);
     x += speedX;
     y += speedY;
+
+    // controle de colisao com as bordas da tela
+    if (x > width - 25 || x < 25) {
+        speedX *= -1;
+    }
+    if (y > height - 25 || y < 25) {
+        speedY *= -1;
+    }
 }
