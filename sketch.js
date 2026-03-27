@@ -8,7 +8,7 @@ let speedY = 5;
 
 // crie a funcao setup do p5js
 function setup() {
-    createCanvas(400, 400);
+    createCanvas(800, 400);
 }
 
 // funcao de desenho do p5js
