@@ -125,15 +125,13 @@ function draw() {
         raqueteJogador.y = height - RACKET_HEIGHT;
     }
     
-    // move a raquete do oponente de forma fluida, seguindo a bola
-    let centroRaqueteOponente = raqueteOponente.y + RACKET_HEIGHT / 2;
-    let diferenca = bola.y - centroRaqueteOponente;
-    
-    // acelera a raquete na direcao da bola
-    if (Math.abs(diferenca) > 10) {
-        velocidadeOponente = Math.sign(diferenca) * 2;
+    // move a raquete do oponente aleatoriamente na direcao da bola
+    if (bola.y < CANVAS_HEIGHT / 2) {
+        // bola na parte superior, move aleatoriamente para cima
+        velocidadeOponente = random(-3, 1);
     } else {
-        velocidadeOponente = 0;
+        // bola na parte inferior, move aleatoriamente para baixo
+        velocidadeOponente = random(-1, 3);
     }
     
     raqueteOponente.y += velocidadeOponente;
