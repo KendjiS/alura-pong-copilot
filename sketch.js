@@ -102,6 +102,9 @@ let bola = new Bola(INITIAL_BALL_X, INITIAL_BALL_Y, null, null, BALL_RADIUS);
 let raqueteJogador = new Raquete(10, CANVAS_HEIGHT / 2 - RACKET_HEIGHT / 2, RACKET_WIDTH, RACKET_HEIGHT);
 let raqueteOponente = new Raquete(CANVAS_WIDTH - RACKET_WIDTH - 10, CANVAS_HEIGHT / 2 - RACKET_HEIGHT / 2, RACKET_WIDTH, RACKET_HEIGHT);
 
+// velocidade de movimento da raquete do oponente
+let velocidadeOponente = 0;
+
 // crie a funcao setup do p5js
 function setup() {
     createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -120,6 +123,26 @@ function draw() {
     }
     if (raqueteJogador.y > height - RACKET_HEIGHT) {
         raqueteJogador.y = height - RACKET_HEIGHT;
+    }
+    
+    // move a raquete do oponente de forma fluida, seguindo a bola
+    let centroRaqueteOponente = raqueteOponente.y + RACKET_HEIGHT / 2;
+    let diferenca = bola.y - centroRaqueteOponente;
+    
+    // acelera a raquete na direcao da bola
+    if (Math.abs(diferenca) > 10) {
+        velocidadeOponente = Math.sign(diferenca) * 2;
+    } else {
+        velocidadeOponente = 0;
+    }
+    
+    raqueteOponente.y += velocidadeOponente;
+    // mantém a raquete do oponente dentro dos limites verticais
+    if (raqueteOponente.y < 0) {
+        raqueteOponente.y = 0;
+    }
+    if (raqueteOponente.y > height - RACKET_HEIGHT) {
+        raqueteOponente.y = height - RACKET_HEIGHT;
     }
     
     // exibe as raquetes
