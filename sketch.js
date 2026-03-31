@@ -10,24 +10,35 @@ const RACKET_WIDTH = 10;
 const RACKET_HEIGHT = 80;
 
 let imagemBola;
+let jogadorImagem;
+let oponenteImagem;
 
 function preload() {
     imagemBola = loadImage('img/bola.png');
+    jogadorImagem = loadImage('img/barra01.png');
+    oponenteImagem = loadImage('img/barra02.png');
+    console.log('Imagens carregadas:', { imagemBola, jogadorImagem, oponenteImagem });
 }
 
 // Crie uma classe para controlar a raquete, as raquestes sao 2 rentangulas que ficam próximo as extremidades da tela, uma de cada lado e se movem na vertical para tentar rebater a bola, se a bola passar por uma raquete, o jogador adversário ganha um ponto
 class Raquete {
-    constructor(x, y, width, height) {
+    constructor(x, y, width, height, imagem) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.imagem = imagem;
     }
 
     // exibe a raquete na tela
     display() {
-        fill(255);
-        rect(this.x, this.y, this.width, this.height);
+        if (this.imagem) {
+            image(this.imagem, this.x, this.y, this.width, this.height);
+        } else {
+            console.log('Raquete sem imagem, usando retângulo');
+            fill(255);
+            rect(this.x, this.y, this.width, this.height);
+        }
     }
 
     // move a raquete
@@ -105,9 +116,9 @@ class Bola {
 // instancia da bola
 let bola = new Bola(INITIAL_BALL_X, INITIAL_BALL_Y, null, null, BALL_RADIUS);
 
-// instancias das raquetes (uma para cada jogador)
-let raqueteJogador = new Raquete(10, CANVAS_HEIGHT / 2 - RACKET_HEIGHT / 2, RACKET_WIDTH, RACKET_HEIGHT);
-let raqueteOponente = new Raquete(CANVAS_WIDTH - RACKET_WIDTH - 10, CANVAS_HEIGHT / 2 - RACKET_HEIGHT / 2, RACKET_WIDTH, RACKET_HEIGHT);
+// instancias das raquetes (uma para cada jogador) - serão criadas no setup()
+let raqueteJogador;
+let raqueteOponente;
 
 // velocidade de movimento da raquete do oponente
 let velocidadeOponente = 0;
@@ -115,6 +126,11 @@ let velocidadeOponente = 0;
 // crie a funcao setup do p5js
 function setup() {
     createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    
+    // cria as raquetes com as imagens carregadas pelo preload()
+    raqueteJogador = new Raquete(10, CANVAS_HEIGHT / 2 - RACKET_HEIGHT / 2, RACKET_WIDTH, RACKET_HEIGHT, jogadorImagem);
+    raqueteOponente = new Raquete(CANVAS_WIDTH - RACKET_WIDTH - 10, CANVAS_HEIGHT / 2 - RACKET_HEIGHT / 2, RACKET_WIDTH, RACKET_HEIGHT, oponenteImagem);
+    
     bola.randomizeSpeed();
 }
 
