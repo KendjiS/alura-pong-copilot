@@ -12,12 +12,13 @@ const RACKET_HEIGHT = 80;
 let imagemBola;
 let jogadorImagem;
 let oponenteImagem;
+let fundoImagem;
 
 function preload() {
     imagemBola = loadImage('img/bola.png');
     jogadorImagem = loadImage('img/barra01.png');
     oponenteImagem = loadImage('img/barra02.png');
-    console.log('Imagens carregadas:', { imagemBola, jogadorImagem, oponenteImagem });
+    fundoImagem = loadImage('img/fundo2.png');
 }
 
 // Crie uma classe para controlar a raquete, as raquestes sao 2 rentangulas que ficam próximo as extremidades da tela, uma de cada lado e se movem na vertical para tentar rebater a bola, se a bola passar por uma raquete, o jogador adversário ganha um ponto
@@ -35,7 +36,6 @@ class Raquete {
         if (this.imagem) {
             image(this.imagem, this.x, this.y, this.width, this.height);
         } else {
-            console.log('Raquete sem imagem, usando retângulo');
             fill(255);
             rect(this.x, this.y, this.width, this.height);
         }
@@ -136,8 +136,9 @@ function setup() {
 
 // funcao de desenho do p5js
 function draw() {
-    background(0);
-    
+    //background(0);
+    image(fundoImagem, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
     // controla a raquete do jogador com o mouse
     raqueteJogador.y = mouseY - RACKET_HEIGHT / 2;
     // mantém a raquete dentro dos limites verticais
