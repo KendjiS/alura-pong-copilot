@@ -9,6 +9,12 @@ const INITIAL_BALL_Y = 200;
 const RACKET_WIDTH = 10;
 const RACKET_HEIGHT = 80;
 
+let imagemBola;
+
+function preload() {
+    imagemBola = loadImage('img/bola.png');
+}
+
 // Crie uma classe para controlar a raquete, as raquestes sao 2 rentangulas que ficam próximo as extremidades da tela, uma de cada lado e se movem na vertical para tentar rebater a bola, se a bola passar por uma raquete, o jogador adversário ganha um ponto
 class Raquete {
     constructor(x, y, width, height) {
@@ -56,8 +62,9 @@ class Bola {
 
     // exibe a bola na tela
     display() {
-        fill(0, 0, 255);
-        ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
+        image(imagemBola, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+        // fill(0, 0, 255);
+        // ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
     }
 
     // move a bola
